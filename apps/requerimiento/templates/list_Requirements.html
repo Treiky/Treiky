@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block content %}
+    <h1>Requerimientos:</h1>
+    <table class="table table-hover">
+    <tr>
+    <th>Autor</th><th>Proyecto</th><th>Rol</th><th>Requerimiento</th><th>Prioridad</th>
+    </tr>
+
+    {% for reque in requerimiento %}
+            <tr>
+            <td>{{ reque.author.last_name }} {{ reque.author.first_name }}</td><td>{{ reque.proyecto }}</td><td>{{ reque.rol }}</td><td>{{ reque.requerimiento }}</td><td>{{ reque.prioridad }}</td>
+            </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

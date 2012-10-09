@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="well">
+        <h1>Bienvenidos a Treiky V 0.1</h1>
+        <p>Treiky es un sistema de gestion de requerimiento, totalmente OPEN SOURCE</p>
+        </br>
+        </br>
+        </br>
+        </br>
+
+    </div>
+
+    <div class="row">
+        <div class="span4">
+        <div class="well">
+            <h3>Por que escribir Requerimientos</h3>
+            <p>Este sistema le permitira mantenerce en contacto con su proveedor permitiendole registrar sus nececidades de forma agil y facil.</p>
+            <p><a class="btn btn-inverse" href="{% url write_req %}">Escribir YA!</a></p>
+        </div>
+        </div>
+        <div class="span4">
+        <div class="well">
+            <h3>Lista de Requerimientos</h3>
+            <p>Contara con una lista ordenada y gestionable de los requerimientos que tiene su cliente.</p>
+            </br>
+            <p><a class="btn btn-inverse" href="/view_req/">Ver Requerimientos &raquo;</a></p>
+        </div>
+        </div>
+        <div class="span4">
+        <div class="well">
+            <h3>Alta de Usuario</h3>
+            <p>Para poder registrar requerimiento o ver los existentes requerira tener un usuario registrado</p>
+            </br>
+            </br>
+            </br>
+            <p><a class="btn btn-inverse" href="{% url new_user %}">Darme de Alta &raquo;</a></p>
+        </div>
+        </div>
+    </div>
+
+    <p>Espero lo que lo disfrutes mucho.</p>
+
+{% endblock %}
