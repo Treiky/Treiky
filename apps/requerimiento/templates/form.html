@@ -8,11 +8,12 @@
 
 {% block content %}
 
-    <h1>Publique su nuevo Requerimiento:</h1>
+    <h1>{{ title }} </h1>
     <p>&nbsp;</p>
     <form class="form-{{ layout }}" action="" method="post">
         {% csrf_token %}
         {{ form|as_bootstrap:layout }}
+        <input type='hidden' name='idproject' value='{{ id }}' />
         {% if layout == "horizontal" %}
             <p class="form-actions">
                 <input type="submit" value="Solicitar" class="btn btn-inverse">
