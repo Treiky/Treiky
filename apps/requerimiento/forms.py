@@ -1,5 +1,5 @@
 # -*- coding: utf-8 *-*
-from django.forms import ModelForm, Textarea, Select, TextInput
+from django.forms import ModelForm, Textarea, Select, TextInput, HiddenInput
 from django import forms
 from apps.requerimiento.models import Requirement, Project, ProfilesUser
 from django.contrib.auth.models import User
@@ -25,8 +25,8 @@ class reqForm(ModelForm):
             'required': 'El campo es requerido'}
         self.fields['description'].error_messages = {
             'required': 'El campo es requerido'}
-        self.fields['project'].queryset = Project.objects.filter(
-            user=user_details)
+        a = ProfilesUser.objects.filter(user=user_details)
+        self.fields['project'].choices = [[x.project.id,x] for x in a]
 
     class Meta:
         model = Requirement
@@ -60,15 +60,13 @@ class projForm(ModelForm):
         fields = ('name', 'description')
 
 
-class newUserForm(ModelForm):
+class editUserForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
-        super(newUserForm, self).__init__(*args, **kwargs)
+        super(editUserForm, self).__init__(*args, **kwargs)
         self.fields['username'].label = "Nombre de usuario"
         self.fields['first_name'].label = "Nombre"
         self.fields['last_name'].label = "Apellido"
-        self.fields['username'].error_messages = {
-            'required': 'El nombre de usuario es requerido'}
         self.fields['last_name'].error_messages = {
             'required': 'La nombre es requerida'}
         self.fields['last_name'].error_messages = {
@@ -79,12 +77,13 @@ class newUserForm(ModelForm):
     class Meta:
         model = User
         widgets = {
-            'username': TextInput,
+            'id': HiddenInput,
+            'username': HiddenInput,
             'first_name': TextInput,
             'last_name': TextInput,
             'email': TextInput,
         }
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('id','username', 'first_name', 'last_name', 'email')
 
 
 class asigUserProj(ModelForm):
@@ -98,11 +97,11 @@ class asigUserProj(ModelForm):
         self.fields['project'].error_messages = {
             'required': 'Debe seleccionar un proyecto'}
         self.fields['user'].error_messages = {
-            'required': 'Debe seleccionar un usuario'}
+            'required': 'El campo es requerido'}
         self.fields['profile'].error_messages = {
-            'required': 'Debe seleccionar un perfil'}
-        self.fields['project'].queryset = Project.objects.filter(
-            user=user_details)
+            'required': 'El campo es requerido'}
+        a = ProfilesUser.objects.filter(user=user_details, profile__id=1).only('project')
+        self.fields['project'].choices = [[x.project.id,x] for x in a]
 
     class Meta:
         model = ProfilesUser
@@ -114,11 +113,24 @@ class asigUserProj(ModelForm):
         fields = ('project', 'user', 'profile')
 
 
-class RegistroUsuarioForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email')
-
-
 class projectSearch(forms.Form):
     project = forms.CharField(label = "Ingrese el nombre del proyecto a editar")
+
+
+class projectSearchV2(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        user_details = kwargs.pop('initial', None)
+        super(projectSearchV2, self).__init__(*args, **kwargs)
+        self.fields['project'].label = "Para el proyecto"
+        self.fields['project'].error_messages = {
+            'required': 'Debe seleccionar un proyecto'}
+        a = ProfilesUser.objects.filter(user=user_details, profile__id=1).only('project')
+        self.fields['project'].choices = [[x.project.id,x] for x in a]
+
+    class Meta:
+        model = Requirement
+        widgets = {
+            'project': Select(),
+        }
+        fields = ('project',)

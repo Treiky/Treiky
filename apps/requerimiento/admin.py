@@ -15,6 +15,7 @@ class profileAdmin(admin.ModelAdmin):
 class profileUserAdmin(admin.ModelAdmin):
     list_display = ('project', 'user', 'profile',)
 
+
 admin.site.register(Requirement, reqAdmin)
 admin.site.register(Project,)
 admin.site.register(Profile, profileAdmin)

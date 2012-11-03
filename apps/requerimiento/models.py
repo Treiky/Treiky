@@ -3,7 +3,7 @@ from django.db import models
 
 import datetime
 from django.contrib.auth.models import User
-
+#comentario
 
 class Project(models.Model):
 
@@ -17,7 +17,7 @@ class Project(models.Model):
 
 class Profile(models.Model):
     #Recorda que siempre el Primero debe ser el admin
-    #El segundo el Colaborador
+    #El segundo el Colabogit@github.com:Treiky/Treiky-Testing.gitrador
     #y el tercero el usuario comun
     name = models.TextField(max_length=20)
     description = models.TextField(max_length=50)
@@ -33,7 +33,7 @@ class ProfilesUser(models.Model):
     profile = models.ForeignKey(Profile)
 
     def __unicode__(self):
-        return "Project: %s User: %s" % (self.project, self.user)
+        return "%s" % (self.project)
 
 
 class Requirement(models.Model):
@@ -50,4 +50,5 @@ class Requirement(models.Model):
     def __unicode__(self):
         return "Author: %s, Requirement: %s" % (
             self.author.username, self.description,)
+
 

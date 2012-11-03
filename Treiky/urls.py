@@ -51,4 +51,6 @@ urlpatterns = patterns('',
         'apps.requerimiento.views.update_project', name='updateproject'),
     url(r'^asigned_user/$',
         'apps.requerimiento.views.asig_user', name='asiguser'),
+    url(r'^edit_user/$',
+        'apps.requerimiento.views.edit_user', name='editUserForm'),
 )
